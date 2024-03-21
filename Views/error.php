@@ -1,3 +1,0 @@
-<?php
-
-// Error page

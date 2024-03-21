@@ -10,15 +10,8 @@ class Vehicule
   private $license_id;
   private $daily_price;
 
-  public function __construct($id, $brand, $model, $horsepower, $category_id, $license_id, $daily_price)
+  public function __construct()
   {
-    $this->id = $id;
-    $this->brand = $brand;
-    $this->model = $model;
-    $this->horsepower = $horsepower;
-    $this->category_id = $category_id;
-    $this->license_id = $license_id;
-    $this->daily_price = $daily_price;
   }
 
   public function getId()
