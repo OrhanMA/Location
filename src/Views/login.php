@@ -16,7 +16,7 @@
   ?>
   <h1>Login page</h1>
 
-  <form action="./../login" method="post">
+  <form action="./login.php" method="post">
     <div>
       <label for="email">Email</label>
       <input required type="email" name="email" id="email" value="test@test.com">

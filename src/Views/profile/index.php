@@ -10,7 +10,7 @@
 <body>
   <h1>Page profile user</h1>
   <?php
-  $user = $data[0];
+  $user = $data['user'];
   var_dump($user);
   ?>
 </body>

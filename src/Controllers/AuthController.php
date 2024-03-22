@@ -51,12 +51,13 @@ class AuthController
 
         if (password_verify($password, $password_hash)) {
           $_SESSION['authenticated_user'] = $user['email'];
-          echo $this->renderView('profile/index');
+
+          echo $this->renderView('profile/index', ['user' => $user]);
           exit();
         } else {
           $_SESSION['authenticated_user'] = null;
           $message = 'Invalid credentials';
-          echo $this->renderView('login', [$message]);
+          echo $this->renderView('login', ['message' => $message]);
           exit();
         }
       } else {

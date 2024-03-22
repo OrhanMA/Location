@@ -59,6 +59,9 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
       case $baseUri . '/login/':
         $authController->post_login();
         break;
+      case $baseUri . '/login.php':
+        $authController->post_login();
+        break;
       default:
         $homeController->not_found_404();
         break;

@@ -18,8 +18,8 @@ print_r($user);
       <h1>Le véhicule de vos rêves à portée de main</h1>
       <h2>Que ce soit pour une heure ou une semaine, repartez avec le véhicule de votre choix parmi notre sélection et revenez les yeux remplis d’étoiles.</h2>
       <div>
-        <a href="">Inscription</a>
-        <a href="">Connexion</a>
+        <a href="./register">Inscription</a>
+        <a href="./login">Connexion</a>
       </div>
     </div>
     <div>

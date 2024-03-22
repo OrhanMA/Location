@@ -22,11 +22,11 @@ class ProfileController
     if (isset($_SESSION['authenticated_user']) && !empty($_SESSION['authenticated_user'])) {
       $email = $_SESSION['authenticated_user'];
       $user = $this->userRepository->getByEmail($email);
-      echo $this->renderView('profile/index', [$user]);
+      echo $this->renderView('profile/index', ['user' => $user]);
       exit();
     } else {
       $message = 'Connectez-vous à votre compte pour accéder à cette page.';
-      echo $this->renderView('login', [$message]);
+      echo $this->renderView('login', ['message' => $message]);
       exit();
     }
   }
