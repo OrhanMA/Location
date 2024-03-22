@@ -41,13 +41,23 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
   $homeController = new HomeController();
   $rentalController = new RentalController();
   $authController = new AuthController();
+  $profileController = new ProfileController();
 
   // print_r($uri_path);
 
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
     switch ($uri_path) {
       case $baseUri . '/register':
-        $authController->register();
+        $authController->post_register();
+        break;
+      case $baseUri . '/register/':
+        $authController->post_register();
+        break;
+      case $baseUri . '/login':
+        $authController->post_login();
+        break;
+      case $baseUri . '/login/':
+        $authController->post_login();
         break;
       default:
         $homeController->not_found_404();
@@ -68,7 +78,22 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
         $vehiculeController->index();
         break;
       case $baseUri . '/register':
-        $authController->index();
+        $authController->get_register();
+        break;
+      case $baseUri . '/register/':
+        $authController->get_register();
+        break;
+      case $baseUri . '/login':
+        $authController->get_login();
+        break;
+      case $baseUri . '/login/':
+        $authController->get_login();
+        break;
+      case $baseUri . '/profile/index':
+        $profileController->index();
+        break;
+      case $baseUri . '/profile/index/':
+        $profileController->index();
         break;
       case str_contains($uri_path, $baseUri . '/vehicules/show/'):
         // str_contains vérifie dans le string en param #1 la présence d'un sous ensemble string précisé en param #2
