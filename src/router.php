@@ -37,37 +37,51 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
 
   $baseUri = '/location/public';
 
-
-  // print_r($uri_path);
-
   $vehiculeController = new VehiculeController();
   $homeController = new HomeController();
   $rentalController = new RentalController();
+  $authController = new AuthController();
 
-  switch ($uri_path) {
-    case $baseUri . '/':
-      $homeController->index();
-      break;
-    case $baseUri . '/index.php':
-      $homeController->index();
-      break;
-    case $baseUri . '/vehicules/':
-      $vehiculeController->index();
-      break;
-    case $baseUri . '/vehicules':
-      $vehiculeController->index();
-      break;
-    case str_contains($uri_path, $baseUri . '/vehicules/show/'):
-      // str_contains vérifie dans le string en param #1 la présence d'un sous ensemble string précisé en param #2
-      $id = get_url_dynamic_id('vehicules', 2);
-      $vehiculeController->show($id);
-      break;
-    case str_contains($uri_path, $baseUri . '/rent'):
-      $id = $_GET['vehicule'];
-      $rentalController->index($id);
-      break;
-    default:
-      $homeController->not_found_404();
-      break;
+  // print_r($uri_path);
+
+  if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    switch ($uri_path) {
+      case $baseUri . '/register':
+        $authController->register();
+        break;
+      default:
+        $homeController->not_found_404();
+        break;
+    }
+  } else if ($_SERVER['REQUEST_METHOD'] == "GET") {
+    switch ($uri_path) {
+      case $baseUri . '/':
+        $homeController->index();
+        break;
+      case $baseUri . '/index.php':
+        $homeController->index();
+        break;
+      case $baseUri . '/vehicules/':
+        $vehiculeController->index();
+        break;
+      case $baseUri . '/vehicules':
+        $vehiculeController->index();
+        break;
+      case $baseUri . '/register':
+        $authController->index();
+        break;
+      case str_contains($uri_path, $baseUri . '/vehicules/show/'):
+        // str_contains vérifie dans le string en param #1 la présence d'un sous ensemble string précisé en param #2
+        $id = get_url_dynamic_id('vehicules', 2);
+        $vehiculeController->show($id);
+        break;
+      case str_contains($uri_path, $baseUri . '/rent'):
+        $id = $_GET['vehicule'];
+        $rentalController->index($id);
+        break;
+      default:
+        $homeController->not_found_404();
+        break;
+    }
   }
 }

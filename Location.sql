@@ -8,6 +8,9 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL
 );
 
+-- La raison pour l'utilisation d'une length 255 pour le password: 
+-- https://www.php.net/manual/fr/function.password-hash.php#:~:text=Notez%20que%20cette,tr%C3%A8s%20bon%20choix).
+
 CREATE TABLE `rental` (
   `id` CHAR(36) PRIMARY KEY,
   `start_date` datetime NOT NULL,
