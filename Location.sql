@@ -13,8 +13,8 @@ CREATE TABLE `user` (
 
 CREATE TABLE `rental` (
   `id` CHAR(36) PRIMARY KEY,
-  `start_date` datetime NOT NULL,
-  `end_date` datetime NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
   `vehicule_id` CHAR(36) NOT NULL,
   `user_id` CHAR(36) 
 );

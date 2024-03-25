@@ -27,8 +27,9 @@ class RentalRepository extends Database
   public function create($start_date, $end_date, $vehicule_id, $user_id)
   {
     $database = $this->getDb();
-    $id = new UUID();
-    $query = 'INSERT INTO rental (id, start_date, end_date, vehicule_id, user_id) VALUES (id=:id, start_date=:id, end_date=:id, vehicule_id=:id, user_id=:id)';
+    $uuid = new UUID();
+    $id = $uuid::v4();
+    $query = 'INSERT INTO rental (id, start_date, end_date, vehicule_id, user_id) VALUES (:id, :start_date, :end_date, :vehicule_id, :user_id)';
 
     $statement = $database->prepare($query);
     $statement->bindParam('id', $id);

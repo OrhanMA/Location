@@ -48,31 +48,25 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
     switch ($uri_path) {
       case $baseUri . '/register':
-        $authController->post_register();
-        break;
       case $baseUri . '/register/':
         $authController->post_register();
         break;
       case $baseUri . '/login':
-        $authController->post_login();
-        break;
       case $baseUri . '/login/':
-        $authController->post_login();
-        break;
       case $baseUri . '/login.php':
         $authController->post_login();
         break;
       case $baseUri . '/profile/update':
-        $profileController->post_update();
-        break;
       case $baseUri . '/profile/update/':
         $profileController->post_update();
         break;
       case $baseUri . '/profile/delete':
-        $profileController->post_delete();
-        break;
       case $baseUri . '/profile/delete/':
         $profileController->post_delete();
+        break;
+      case $baseUri . '/rent/':
+      case $baseUri . '/rent':
+        $vehiculeController->post_rent();
         break;
       default:
         $homeController->not_found_404();
