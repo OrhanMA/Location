@@ -86,29 +86,29 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
       case $baseUri . '/index.php':
         $homeController->index();
         break;
+      case $baseUri . '/vehicules/index.php':
+      case $baseUri . '/vehicules/index':
       case $baseUri . '/vehicules/':
-        $vehiculeController->index();
-        break;
       case $baseUri . '/vehicules':
         $vehiculeController->index();
         break;
       case $baseUri . '/register':
-        $authController->get_register();
-        break;
+      case $baseUri . '/register/':
       case $baseUri . '/register/':
         $authController->get_register();
         break;
       case $baseUri . '/login':
-        $authController->get_login();
-        break;
       case $baseUri . '/login/':
+      case $baseUri . '/login/index.php':
         $authController->get_login();
         break;
       case $baseUri . '/profile/index':
-        $profileController->index();
-        break;
       case $baseUri . '/profile/index/':
         $profileController->index();
+        break;
+      case str_contains($uri_path, $baseUri . '/vehicules/rent/'):
+        $vehicule_id = get_url_dynamic_id('vehicules', 2);
+        $vehiculeController->get_rent($vehicule_id);
         break;
       case str_contains($uri_path, $baseUri . '/profile/update/'):
         $id = get_url_dynamic_id('profile', 2);

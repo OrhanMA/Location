@@ -47,7 +47,9 @@ class AuthController
         // $password le mot de passe en clair soumis dans le formulaire
         // $password_hash le hash du password du user trouvé en base de données
 
-        if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+          session_start();
+        }
 
         if (password_verify($password, $password_hash)) {
           $_SESSION['authenticated_user'] = $user['email'];

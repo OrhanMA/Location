@@ -2,13 +2,13 @@
 
 class Vehicule
 {
-  private $id;
-  private $brand;
-  private $model;
-  private $horsepower;
-  private $category_id;
-  private $license_id;
-  private $daily_price;
+  public $id;
+  public $brand;
+  public $model;
+  public $horsepower;
+  public $category_id;
+  public $license_id;
+  public $daily_price;
 
   public function __construct()
   {

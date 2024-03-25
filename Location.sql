@@ -98,6 +98,7 @@ VALUES
 INSERT INTO `category_vehicule` (`id`, `vehicule_id`, `category_id`)
 VALUES 
     (UUID(), (SELECT id FROM vehicule WHERE brand = 'Ferrari' AND model = '488 GTB'), (SELECT id FROM category WHERE name = 'Sports Car')),
+    (UUID(), (SELECT id FROM vehicule WHERE brand = 'Ferrari' AND model = '488 GTB'), (SELECT id FROM category WHERE name = 'Luxury Car')),
     (UUID(), (SELECT id FROM vehicule WHERE brand = 'Lamborghini' AND model = 'Huracan'), (SELECT id FROM category WHERE name = 'Sports Car')),
     (UUID(), (SELECT id FROM vehicule WHERE brand = 'Porsche' AND model = '911'), (SELECT id FROM category WHERE name = 'Sports Car')),
     (UUID(), (SELECT id FROM vehicule WHERE brand = 'Audi' AND model = 'R8'), (SELECT id FROM category WHERE name = 'Sports Car'));
