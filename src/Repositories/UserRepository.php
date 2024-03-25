@@ -55,12 +55,13 @@ class UserRepository extends Database
   }
 
 
-  public function update($user_id, $full_name, $email, $phone, $password)
+  public function update($id, $full_name, $email, $phone, $password)
   {
+    // print_r($password);
     $database = $this->getDb();
-    $query = 'UPDATE user SET (full_name, email, phone, password) VALUES (full_name=:full_name, email=:email, phone=:phone, password=:password) WHERE id=:id';
+    $query = $query = 'UPDATE user SET full_name=:full_name, email=:email, phone=:phone, password=:password WHERE id=:id';
     $statement = $database->prepare($query);
-    $statement->bindParam('id', $user_id);
+    $statement->bindParam('id', $id);
     $statement->bindParam('full_name', $full_name);
     $statement->bindParam('email', $email);
     $statement->bindParam('phone', $phone);

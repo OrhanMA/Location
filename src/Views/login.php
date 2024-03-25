@@ -15,7 +15,7 @@
   }
   ?>
   <h1>Login page</h1>
-
+  <a href="/location/public/register">Créer un compte</a>
   <form action="./login.php" method="post">
     <div>
       <label for="email">Email</label>

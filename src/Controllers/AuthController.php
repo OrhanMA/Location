@@ -65,6 +65,10 @@ class AuthController
         echo $this->renderView('login', ['message' => $message]);
         exit();
       }
+    } else {
+      $message = "Les données du formulaire n'ont pas pu être récupérée. Veuillez réessayer.";
+      echo $this->renderView('login', ['message' => $message]);
+      exit();
     }
   }
 

@@ -62,6 +62,18 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
       case $baseUri . '/login.php':
         $authController->post_login();
         break;
+      case $baseUri . '/profile/update':
+        $profileController->post_update();
+        break;
+      case $baseUri . '/profile/update/':
+        $profileController->post_update();
+        break;
+      case $baseUri . '/profile/delete':
+        $profileController->post_delete();
+        break;
+      case $baseUri . '/profile/delete/':
+        $profileController->post_delete();
+        break;
       default:
         $homeController->not_found_404();
         break;
@@ -98,15 +110,23 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
       case $baseUri . '/profile/index/':
         $profileController->index();
         break;
+      case str_contains($uri_path, $baseUri . '/profile/update/'):
+        $id = get_url_dynamic_id('profile', 2);
+        $profileController->get_update($id);
+        break;
+      case str_contains($uri_path, $baseUri . '/profile/delete/'):
+        $id = get_url_dynamic_id('profile', 2);
+        $profileController->get_delete($id);
+        break;
       case str_contains($uri_path, $baseUri . '/vehicules/show/'):
         // str_contains vérifie dans le string en param #1 la présence d'un sous ensemble string précisé en param #2
         $id = get_url_dynamic_id('vehicules', 2);
         $vehiculeController->show($id);
         break;
-      case str_contains($uri_path, $baseUri . '/rent'):
-        $id = $_GET['vehicule'];
-        $rentalController->index($id);
-        break;
+        // case str_contains($uri_path, $baseUri . '/rent'):
+        //   $id = $_GET['vehicule'];
+        //   $rentalController->index($id);
+        //   break;
       default:
         $homeController->not_found_404();
         break;
