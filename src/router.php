@@ -48,12 +48,9 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
     switch ($uri_path) {
       case $baseUri . '/register':
-      case $baseUri . '/register/':
         $authController->post_register();
         break;
       case $baseUri . '/login':
-      case $baseUri . '/login/':
-      case $baseUri . '/login.php':
         $authController->post_login();
         break;
       case $baseUri . '/profile/update':
@@ -74,31 +71,23 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
     }
   } else if ($_SERVER['REQUEST_METHOD'] == "GET") {
     switch ($uri_path) {
-      case $baseUri . '/':
-        $homeController->index();
-        break;
       case $baseUri . '/index.php':
         $homeController->index();
         break;
       case $baseUri . '/vehicules/index.php':
-      case $baseUri . '/vehicules/index':
-      case $baseUri . '/vehicules/':
-      case $baseUri . '/vehicules':
         $vehiculeController->index();
         break;
-      case $baseUri . '/register':
-      case $baseUri . '/register/':
-      case $baseUri . '/register/':
+      case $baseUri . '/register/index.php':
         $authController->get_register();
         break;
-      case $baseUri . '/login':
-      case $baseUri . '/login/':
       case $baseUri . '/login/index.php':
         $authController->get_login();
         break;
-      case $baseUri . '/profile/index':
-      case $baseUri . '/profile/index/':
+      case $baseUri . '/profile/index.php':
         $profileController->index();
+        break;
+      case $baseUri . 'profile/rentals/index.php':
+        $rentalController->index();
         break;
       case str_contains($uri_path, $baseUri . '/vehicules/rent/'):
         $vehicule_id = get_url_dynamic_id('vehicules', 2);

@@ -13,6 +13,17 @@ class RentalRepository extends Database
     return $rentals;
   }
 
+  public function getUserRentals($user_id)
+  {
+    $query = 'SELECT * FROM rental WHERE user_id = :user_id ';
+    $database = $this->getDb();
+    $statement = $database->query($query);
+    $statement->bindParam('user_id', $user_id);
+    $statement->execute();
+    $rentals = $statement->fetchAll(PDO::FETCH_CLASS, Rental::class);
+    return $rentals;
+  }
+
   public function getById($id)
   {
     $query = 'SELECT * FROM rental WHERE id = :id';

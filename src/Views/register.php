@@ -14,8 +14,8 @@
   }
   ?>
   <h1>Register page</h1>
-
-  <form action="./register" method="post">
+  <a href="/location/public/login/index.php">Connexion</a>
+  <form action="/location/public/register" method="post">
     <div>
       <label for="full_name">Full name</label>
       <input required type="text" name="full_name" id="full_name" value="Orhan">

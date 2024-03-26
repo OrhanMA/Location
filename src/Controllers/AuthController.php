@@ -92,8 +92,15 @@ class AuthController
 
           $this->userRepository->create($full_name, $email, $phone, $password_hash);
 
+          $user = $this->userRepository->getByEmail($email);
+
+          if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+          }
+          $_SESSION['authenticated_user'] = $user['email'];
+
           $message = 'Vous êtes bien inscrit. Vous devez désormais vous connecter.';
-          echo $this->renderView('login', ['message' => $message]);
+          echo $this->renderView('profile/index', ['message' => $message, 'user' => $user]);
           exit();
         } else {
           $message = 'Il y a déjà un utilisateur inscrit avec cette adresse email. Connectez-vous.';

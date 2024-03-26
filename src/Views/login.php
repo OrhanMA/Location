@@ -15,8 +15,8 @@
   }
   ?>
   <h1>Login page</h1>
-  <a href="/location/public/register">Créer un compte</a>
-  <form action="./login.php" method="post">
+  <a href="/location/public/register/index.php">Créer un compte</a>
+  <form action="/location/public/login" method="post">
     <div>
       <label for="email">Email</label>
       <input required type="email" name="email" id="email" value="test@test.com">

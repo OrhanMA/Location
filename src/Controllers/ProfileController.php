@@ -160,7 +160,7 @@ class ProfileController
   {
     if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
-    // var_dump($_SESSION);
+    var_dump($_SESSION);
 
     if (isset($_SESSION['authenticated_user']) && !empty($_SESSION['authenticated_user'])) {
       $email = $_SESSION['authenticated_user'];

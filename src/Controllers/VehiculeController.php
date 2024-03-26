@@ -82,6 +82,7 @@ class VehiculeController
     $end_date = date("Y-m-d", strtotime($form_data['end_date']));
 
     $this->rentalRepository->create($start_date, $end_date, $form_data['vehicule_id'], $user['id']);
+    echo $this->renderView('profile/rentals/index', ['user' => $user]);
   }
 
   // 9be97396-e5f4-11ee-95c9-db561d8c665e
