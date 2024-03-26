@@ -6,6 +6,7 @@ require_once __DIR__ . '/../Repositories/UserRepository.php';
 class ProfileController
 {
   use View;
+  use FormValidation;
   private $userRepository;
 
   public function __construct()
@@ -75,11 +76,22 @@ class ProfileController
       exit();
     }
 
+    $fields = [
+      'first_name' => '/^[a-zA-ZÀ-ÿ\s]{3,50}$/',
+      'last_name' => '/^[a-zA-ZÀ-ÿ\s]{3,50}$/',
+      'phone' => '/^\d{10}$/',
+      'email' => '/^[^\s@]+@[^\s@]+\.[^\s@]+$/',
+      'current_password' => '/^.{7,}$/',
+      'new_password' => '/^.{7,}$/'
+    ];
+
+    $this->validate_form_fields($fields, 'profile/update/index');
+
     $id = htmlspecialchars($_POST['id']);
     $first_name = htmlspecialchars($_POST['first_name']);
     $last_name = htmlspecialchars($_POST['last_name']);
-    $email = htmlspecialchars($_POST['email']);
     $phone = htmlspecialchars($_POST['phone']);
+    $email = htmlspecialchars($_POST['email']);
     $current_password = htmlspecialchars($_POST['current_password']);
     $new_password = htmlspecialchars($_POST['new_password']);
 

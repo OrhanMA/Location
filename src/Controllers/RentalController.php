@@ -6,6 +6,7 @@ require_once __DIR__ . '/../Repositories/RentalRepository.php';
 class RentalController
 {
   use View;
+  use FormValidation;
   private $rentalRepository;
   private $userRepository;
 
@@ -36,6 +37,7 @@ class RentalController
 
 
     $user_id = $user['id'];
+
     $rentals = $this->rentalRepository->getUserRentals($user_id);
 
     echo $this->renderView('profile/rentals/index', ['user' => $user, 'rentals' => $rentals]);
@@ -132,6 +134,11 @@ class RentalController
       exit();
     } else {
       if (isset($_POST) && !empty($_POST)) {
+        $fields = [
+          'end_date' => '/^\d{4}-\d{2}-\d{2}$/',
+        ];
+        $this->validate_form_fields($fields, 'profile/index');
+
         $new_end_date = htmlspecialchars($_POST['end_date']);
         $reservation_id = htmlspecialchars($_POST['reservation_id']);
 

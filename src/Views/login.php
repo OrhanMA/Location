@@ -23,7 +23,7 @@
     </div>
     <div>
       <label for="password">Password</label>
-      <input required type="password" name="password" id="password" value="test">
+      <input required type="password" name="password" id="password" value="test1234">
     </div>
     <input type="submit" value="Connexion">
   </form>

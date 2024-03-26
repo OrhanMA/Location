@@ -5,6 +5,7 @@ require_once __DIR__ . '/../Repositories/UserRepository.php';
 class AuthController
 {
   use View;
+  use FormValidation;
   private $userRepository;
 
   public function __construct()
@@ -88,47 +89,47 @@ class AuthController
   {
     if (isset($_POST) && !empty($_POST)) {
 
-      if (isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['password']) && !empty($_POST['password'])) {
-        $first_name = htmlspecialchars($_POST['first_name']);
-        $last_name = htmlspecialchars($_POST['last_name']);
-        $phone = htmlspecialchars($_POST['phone']);
-        $email = htmlspecialchars($_POST['email']);
-        $password = htmlspecialchars($_POST['password']);
+      $fields = [
+        'first_name' => '/^[a-zA-ZÀ-ÿ\s]{3,50}$/',
+        'last_name' => '/^[a-zA-ZÀ-ÿ\s]{3,50}$/',
+        'phone' => '/^\d{10}$/',
+        'email' => '/^[^\s@]+@[^\s@]+\.[^\s@]+$/',
+        'password' => '/^.{7,}$/'
+      ];
 
-        // $email_filtered = filter_var($email, FILTER_VALIDATE_EMAIL);
-        // $email_filtered_2 = filter_var("email.com", FILTER_VALIDATE_EMAIL);
-
-        // var_dump($email_filtered);
-        // var_dump($email_filtered_2);
-
-        // if (!$email_filtered) {
-        //   echo 'email non validé';
-        // } else {
-        //   echo 'email validé';
-        // }
-
-        // $user = $this->userRepository->getByEmail($email);
-        // if (!$user) {
-        //   $password_hash = password_hash($password, PASSWORD_DEFAULT);
-
-        //   $this->userRepository->create($first_name, $last_name, $email, $phone, $password_hash);
-
-        //   $user = $this->userRepository->getByEmail($email);
-
-        //   if (session_status() !== PHP_SESSION_ACTIVE) {
-        //     session_start();
-        //   }
-        //   $_SESSION['authenticated_user'] = $user['email'];
+      $this->validate_form_fields($fields, 'register');
 
 
-        //   echo $this->renderView('profile/index', ['user' => $user]);
-        //   header('Location: /location/public/profile/index.php');
-        //   exit();
-        // } else {
-        //   $message = 'Il y a déjà un utilisateur inscrit avec cette adresse email. Connectez-vous.';
-        //   echo $this->renderView('login', ['message' => $message]);
-        //   exit();
-        // }
+      $first_name = htmlspecialchars($_POST['first_name']);
+      $last_name = htmlspecialchars($_POST['last_name']);
+      $phone = htmlspecialchars($_POST['phone']);
+      $email = htmlspecialchars($_POST['email']);
+      $password = htmlspecialchars($_POST['password']);
+
+
+      $user = $this->userRepository->getByEmail($email);
+
+      if (!$user) {
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+        $this->userRepository->create($first_name, $last_name, $email, $phone, $password_hash);
+
+        // j'utilise pas PDO::lastInsertedId parce que j'utilise des UUID v4
+        $user = $this->userRepository->getByEmail($email);
+
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+          session_start();
+        }
+        $_SESSION['authenticated_user'] = $user['email'];
+
+        // redirection directement au profil au lieu de la page de connexion
+        echo $this->renderView('profile/index', ['user' => $user]);
+        header('Location: /location/public/profile/index.php');
+        exit();
+      } else {
+        $message = 'Il y a déjà un utilisateur inscrit avec cette adresse email. Connectez-vous.';
+        echo $this->renderView('login', ['message' => $message]);
+        exit();
       }
     } else {
       $message = "Les données du formulaire n'ont pas pu être récupérée. Veuillez réessayer.";

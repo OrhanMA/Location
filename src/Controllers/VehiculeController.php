@@ -8,6 +8,7 @@ require_once __DIR__ . '/../Repositories/UserRepository.php';
 class VehiculeController
 {
   use View;
+  use FormValidation;
   private $vehiculeRepository;
   private $licenseRepository;
   private $rentalRepository;
@@ -63,17 +64,18 @@ class VehiculeController
       echo $this->renderView('vehicules/index', ['message' => $message]);
       exit();
     }
-    $form_data = [];
-    foreach ($_POST as $key => $value) {
-      if (!isset($_POST[$key]) || empty($_POST[$key])) {
-        $message = "Le champ $key du formulaire n'a pas pu être récupéré. Veuillez recommencer.";
-        echo $this->renderView('vehicules/index', ['message' => $message]);
-        exit();
-      }
-      $form_data[$key] = htmlspecialchars($value);
-    }
 
-    $user = $this->userRepository->getByEmail($form_data['email']);
+    $fields = [
+      'start_date' => '/^\d{4}-\d{2}-\d{2}$/',
+      'end_date' => '/^\d{4}-\d{2}-\d{2}$/'
+    ];
+
+    $this->validate_form_fields($fields, 'vehicules/index');
+
+    $sanitized_start_date = htmlspecialchars($_POST['start_date']);
+    $sanitized_end_date = htmlspecialchars($_POST['end_date']);
+
+    $user = $this->userRepository->getByEmail($_POST['email']);
 
     if (!$user) {
       $message = "Vous devez être connecté pour réserver un véhicule";
@@ -81,15 +83,17 @@ class VehiculeController
       exit();
     }
 
-    $start_date = date("Y-m-d", strtotime($form_data['start_date']));
-    $end_date = date("Y-m-d", strtotime($form_data['end_date']));
+    $start_date = date("Y-m-d", strtotime($sanitized_start_date));
+    $end_date = date("Y-m-d", strtotime($sanitized_end_date));
 
-    $this->rentalRepository->create($start_date, $end_date, $form_data['vehicule_id'], $user['id']);
-    echo $this->renderView('profile/rentals/index', ['user' => $user]);
+    $this->rentalRepository->create($start_date, $end_date, $_POST['vehicule_id'], $user['id']);
+
+    $rentals = $this->rentalRepository->getUserRentals($user['id']);
+
+    echo $this->renderView('profile/rentals/index', ['user' => $user, 'rentals' => $rentals]);
     exit();
   }
 
-  // 9be97396-e5f4-11ee-95c9-db561d8c665e
 
   public function show($id)
   {
