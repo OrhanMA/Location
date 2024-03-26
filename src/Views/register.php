@@ -17,8 +17,12 @@
   <a href="/location/public/login/index.php">Connexion</a>
   <form action="/location/public/register" method="post">
     <div>
-      <label for="full_name">Full name</label>
-      <input required type="text" name="full_name" id="full_name" value="Orhan">
+      <label for="first_name">First name</label>
+      <input type="text" minlength="3" maxlength="50" name="first_name" id="first_name" value="Orhan">
+    </div>
+    <div>
+      <label for="last_name">Last name</label>
+      <input required type="text" minlength="3" maxlength="50" name="last_name" id="last_name" value="Madi Assani">
     </div>
     <div>
       <label for="phone">Phone</label>
@@ -26,11 +30,11 @@
     </div>
     <div>
       <label for="email">Email</label>
-      <input required type="email" name="email" id="email" value="test@test.com">
+      <input required type="email" minlength="5" maxlength="80" name="email" id="email" value="test@test.com">
     </div>
     <div>
       <label for="password">Password</label>
-      <input required type="password" name="password" id="password" value="test">
+      <input required type="password" minlength="7" name="password" id="password" value="test">
     </div>
     <input type="submit" value="Inscription">
   </form>

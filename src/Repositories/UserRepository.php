@@ -48,17 +48,18 @@ class UserRepository extends Database
     return $user;
   }
 
-  public function create($full_name, $email, $phone, $password)
+  public function create($first_name, $last_name, $email, $phone, $password)
   {
     $database = $this->getDb();
     $uuid = new UUID();
     $id = $uuid::v4();
 
-    $query = 'INSERT INTO user (id, full_name, email, phone, password) VALUES (:id, :full_name, :email, :phone, :password)';
+    $query = 'INSERT INTO user (id, first_name, last_name, email, phone, password) VALUES (:id, :first_name, :last_name, :email, :phone, :password)';
 
     $statement = $database->prepare($query);
     $statement->bindParam(':id', $id);
-    $statement->bindParam(':full_name', $full_name);
+    $statement->bindParam(':first_name', $first_name);
+    $statement->bindParam(':last_name', $last_name);
     $statement->bindParam(':email', $email);
     $statement->bindParam(':phone', $phone);
     $statement->bindParam(':password', $password);
@@ -66,14 +67,15 @@ class UserRepository extends Database
   }
 
 
-  public function update($id, $full_name, $email, $phone, $password)
+  public function update($id, $first_name, $last_name, $email, $phone, $password)
   {
     // print_r($password);
     $database = $this->getDb();
-    $query = $query = 'UPDATE user SET full_name=:full_name, email=:email, phone=:phone, password=:password WHERE id=:id';
+    $query = $query = 'UPDATE user SET first_name=:first_name, last_name=:last_name, email=:email, phone=:phone, password=:password WHERE id=:id';
     $statement = $database->prepare($query);
     $statement->bindParam('id', $id);
-    $statement->bindParam('full_name', $full_name);
+    $statement->bindParam('first_name', $first_name);
+    $statement->bindParam('last_name', $last_name);
     $statement->bindParam('email', $email);
     $statement->bindParam('phone', $phone);
     $statement->bindParam('password', $password);

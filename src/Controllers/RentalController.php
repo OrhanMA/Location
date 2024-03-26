@@ -63,7 +63,41 @@ class RentalController
 
   public function post_delete()
   {
-    // 
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+      session_start();
+    }
+
+    if (!isset($_SESSION) || empty($_SESSION)) {
+      $message = 'Impossible de vous authentifier pour cette action. Veuillez vous connecter.';
+      echo $this->renderView('login', ['message' => $message]);
+      exit();
+    }
+    if (!isset($_SESSION['authenticated_user']) || empty($_SESSION['authenticated_user'])) {
+      $message = 'Impossible de vous authentifier pour cette action. Veuillez vous connecter.';
+      echo $this->renderView('login', ['message' => $message]);
+      exit();
+    }
+
+    $user_email = $_SESSION['authenticated_user'];
+    $user = $this->userRepository->getUserIdByEmail($user_email);
+    $user_id = $user['id'];
+
+    $reservation_id = htmlspecialchars($_POST['reservation_id']);
+    $reservation = $this->rentalRepository->getById($reservation_id);
+
+
+    if ($user_id !== $reservation['user_id']) {
+      session_destroy();
+      $message = "Vous n'êtes pas autorisé à réaliser cette action. Pour réaliser cette action, veuillez vous connecter.";
+      echo $this->renderView('login', ['message' => $message]);
+      exit();
+    } else {
+      $this->rentalRepository->delete($reservation_id);
+      $rentals = $this->rentalRepository->getUserRentals($user_id);
+      $message = 'La réservation a bien été supprimée';
+      echo $this->renderView('/profile/rentals/index', ['message' => $message, 'rentals' => $rentals]);
+      exit();
+    }
   }
 
   public function post_update()
@@ -73,31 +107,30 @@ class RentalController
     }
 
     if (!isset($_SESSION) || empty($_SESSION)) {
-      // impossible d'accéder au données d'authentification
-      // redirect vers login
+      $message = 'Impossible de vous authentifier pour cette action. Veuillez vous connecter.';
+      echo $this->renderView('login', ['message' => $message]);
+      exit();
     }
     if (!isset($_SESSION['authenticated_user']) || empty($_SESSION['authenticated_user'])) {
-      // impossible d'accéder au données d'authentification
-      // redirect vers login
+      $message = 'Impossible de vous authentifier pour cette action. Veuillez vous connecter.';
+      echo $this->renderView('login', ['message' => $message]);
+      exit();
     }
 
     $user_email = $_SESSION['authenticated_user'];
-
     $user = $this->userRepository->getUserIdByEmail($user_email);
+    $user_id = $user['id'];
 
     $reservation_id = htmlspecialchars($_POST['reservation_id']);
     $reservation = $this->rentalRepository->getById($reservation_id);
 
-    $user_id = $user['id'];
 
     if ($user_id !== $reservation['user_id']) {
-      echo 'user trying to modify in not authorized because he does not own the rental';
-      // destroy session
-      // redirect to login
+      session_destroy();
+      $message = "Vous n'êtes pas autorisé à réaliser cette action. Pour réaliser cette action, veuillez vous connecter.";
+      echo $this->renderView('login', ['message' => $message]);
+      exit();
     } else {
-      echo 'user is authorized';
-      echo "</br>";
-      // continue updating
       if (isset($_POST) && !empty($_POST)) {
         $new_end_date = htmlspecialchars($_POST['end_date']);
         $reservation_id = htmlspecialchars($_POST['reservation_id']);
@@ -106,9 +139,11 @@ class RentalController
         $rentals = $this->rentalRepository->getUserRentals($user_id);
         $message = 'La durée de réservation a bien été mise à jour';
         echo $this->renderView('/profile/rentals/index', ['message' => $message, 'rentals' => $rentals]);
+        exit();
       } else {
-        // authorized but no data retrieved
-        // redirect to profile/rentals
+        $message = "Les données permettant la mise à jour n'ont pas pu être récupérées. Veuillez réessayer.";
+        echo $this->renderView('profile/index', ['message' => $message]);
+        exit();
       }
     }
   }

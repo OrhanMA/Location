@@ -76,7 +76,8 @@ class ProfileController
     }
 
     $id = htmlspecialchars($_POST['id']);
-    $full_name = htmlspecialchars($_POST['full_name']);
+    $first_name = htmlspecialchars($_POST['first_name']);
+    $last_name = htmlspecialchars($_POST['last_name']);
     $email = htmlspecialchars($_POST['email']);
     $phone = htmlspecialchars($_POST['phone']);
     $current_password = htmlspecialchars($_POST['current_password']);
@@ -113,7 +114,7 @@ class ProfileController
     }
 
     $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
-    $this->userRepository->update($id, $full_name, $email, $phone, $new_password_hash);
+    $this->userRepository->update($id, $first_name, $last_name, $email, $phone, $new_password_hash);
     $message = 'Le profil a correctement été mis à jour';
     echo $this->renderView("profile/update/index", ['message' => $message, 'user' => $user]);
     exit();
@@ -140,7 +141,7 @@ class ProfileController
       }
       // si ce n'est pas le bon user qui fait la requête
       $_SESSION['authenticated_user'] = null;
-      $message = "Aucun user correspondant n'a été trouvé, veuillez vous identifier.";
+      $message = "Aucun user correspondant n'a été trouvé, veuillez vous identifier pour réaliser cette action.";
       echo $this->renderView('login', ['message' => $message]);
       exit();
     }
@@ -155,8 +156,9 @@ class ProfileController
     }
 
     $this->userRepository->delete($id);
-    $message = 'Votre compte a correctement été supprimé';
-    echo $this->renderView("login", ['message' => $message]);
+    session_destroy();
+    // je refresh et redirige avec header pour que le header soit aussi mis à jour
+    header('Refresh:0; url=/location/public/register/index.php');
     exit();
   }
 

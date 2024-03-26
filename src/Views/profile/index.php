@@ -13,7 +13,7 @@
   $user = $data['user'];
   var_dump($user);
   ?>
-  <a href="location/public/profile/update/<?php echo $user['id']; ?>">Mettre à jour profile</a>
+  <a href="/location/public/profile/update/<?php echo $user['id']; ?>">Mettre à jour profile</a>
   <a href="/location/public/profile/delete/<?php echo $user['id']; ?>">Supprimer mon compte</a>
 </body>
 

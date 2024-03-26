@@ -3,15 +3,17 @@
 class User
 {
   private $id;
-  private $full_name;
+  private $first_name;
+  private $last_name;
   private $email;
   private $phone;
   private $password;
 
-  public function __construct($id, $full_name, $email, $phone, $password)
+  public function __construct($id, $first_name, $last_name, $email, $phone, $password)
   {
     $this->id = $id;
-    $this->full_name = $full_name;
+    $this->first_name = $first_name;
+    $this->last_name = $last_name;
     $this->email = $email;
     $this->phone = $phone;
     $this->password = $password;
@@ -27,13 +29,21 @@ class User
     $this->id = $value;
   }
 
-  public function getFullname()
+  public function getFirstname()
   {
-    return $this->full_name;
+    return $this->first_name;
   }
-  public function setFullname($value)
+  public function setFirstname($value)
   {
-    $this->full_name = $value;
+    $this->first_name = $value;
+  }
+  public function getLastname()
+  {
+    return $this->last_name;
+  }
+  public function setLastname($value)
+  {
+    $this->last_name = $value;
   }
 
   public function getEmail()

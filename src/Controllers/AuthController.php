@@ -89,33 +89,46 @@ class AuthController
     if (isset($_POST) && !empty($_POST)) {
 
       if (isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['password']) && !empty($_POST['password'])) {
-        $full_name = htmlspecialchars($_POST['full_name']);
+        $first_name = htmlspecialchars($_POST['first_name']);
+        $last_name = htmlspecialchars($_POST['last_name']);
         $phone = htmlspecialchars($_POST['phone']);
         $email = htmlspecialchars($_POST['email']);
         $password = htmlspecialchars($_POST['password']);
 
-        $user = $this->userRepository->getByEmail($email);
-        if (!$user) {
-          $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        // $email_filtered = filter_var($email, FILTER_VALIDATE_EMAIL);
+        // $email_filtered_2 = filter_var("email.com", FILTER_VALIDATE_EMAIL);
 
-          $this->userRepository->create($full_name, $email, $phone, $password_hash);
+        // var_dump($email_filtered);
+        // var_dump($email_filtered_2);
 
-          $user = $this->userRepository->getByEmail($email);
+        // if (!$email_filtered) {
+        //   echo 'email non validé';
+        // } else {
+        //   echo 'email validé';
+        // }
 
-          if (session_status() !== PHP_SESSION_ACTIVE) {
-            session_start();
-          }
-          $_SESSION['authenticated_user'] = $user['email'];
+        // $user = $this->userRepository->getByEmail($email);
+        // if (!$user) {
+        //   $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+        //   $this->userRepository->create($first_name, $last_name, $email, $phone, $password_hash);
+
+        //   $user = $this->userRepository->getByEmail($email);
+
+        //   if (session_status() !== PHP_SESSION_ACTIVE) {
+        //     session_start();
+        //   }
+        //   $_SESSION['authenticated_user'] = $user['email'];
 
 
-          echo $this->renderView('profile/index', ['user' => $user]);
-          header('Location: /location/public/profile/index.php');
-          exit();
-        } else {
-          $message = 'Il y a déjà un utilisateur inscrit avec cette adresse email. Connectez-vous.';
-          echo $this->renderView('login', ['message' => $message]);
-          exit();
-        }
+        //   echo $this->renderView('profile/index', ['user' => $user]);
+        //   header('Location: /location/public/profile/index.php');
+        //   exit();
+        // } else {
+        //   $message = 'Il y a déjà un utilisateur inscrit avec cette adresse email. Connectez-vous.';
+        //   echo $this->renderView('login', ['message' => $message]);
+        //   exit();
+        // }
       }
     } else {
       $message = "Les données du formulaire n'ont pas pu être récupérée. Veuillez réessayer.";

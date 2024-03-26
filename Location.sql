@@ -2,8 +2,9 @@
 
 CREATE TABLE `user` (
   `id` CHAR(36) PRIMARY KEY,
-  `full_name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `first_name` varchar(50),
+  `last_name` varchar(50) NOT NULL,
+  `email` varchar(80) NOT NULL,
   `phone` varchar(10) NOT NULL,
   `password` varchar(255) NOT NULL
 );
@@ -55,12 +56,12 @@ ALTER TABLE `category_vehicule` ADD FOREIGN KEY (`vehicule_id`) REFERENCES `vehi
 ALTER TABLE `category_vehicule` ADD FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 -- Generate fake data for the user table
-INSERT INTO `user` (`id`, `full_name`, `email`, `phone`, `password`)
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`)
 VALUES 
-    (UUID(), 'John Doe', 'john@example.com', '0612345678', 'password123'),
-    (UUID(), 'Jane Smith', 'jane@example.com', '0712345678', 'password456'),
-    (UUID(), 'Alice Johnson', 'alice@example.com', '0698765432', 'password789'),
-    (UUID(), 'Bob Brown', 'bob@example.com', '0765432109', 'passwordABC');
+    (UUID(), 'John', 'Doe', 'john@example.com', '0612345678', 'password123'),
+    (UUID(), 'Jane', 'Smith', 'jane@example.com', '0712345678', 'password456'),
+    (UUID(), 'Alice', 'Johnson', 'alice@example.com', '0698765432', 'password789'),
+    (UUID(), 'Bob', 'Brown', 'bob@example.com', '0765432109', 'passwordABC');
 
 -- Generate fake data for the license table
 INSERT INTO `license` (`id`, `plate`)
@@ -81,10 +82,10 @@ VALUES
 -- Generate fake data for the rental table
 INSERT INTO `rental` (`id`, `start_date`, `end_date`, `vehicule_id`, `user_id`)
 VALUES 
-    (UUID(), '2020-07-28', '2020-08-05', (SELECT id FROM vehicule WHERE brand = 'Ferrari' AND model = '488 GTB'), (SELECT id FROM user WHERE full_name = 'John Doe')),
-    (UUID(), '2020-08-10', '2020-08-15', (SELECT id FROM vehicule WHERE brand = 'Lamborghini' AND model = 'Huracan'), (SELECT id FROM user WHERE full_name = 'Jane Smith')),
-    (UUID(), '2020-09-01', '2020-09-10', (SELECT id FROM vehicule WHERE brand = 'Porsche' AND model = '911'), (SELECT id FROM user WHERE full_name = 'Alice Johnson')),
-    (UUID(), '2020-10-05', '2020-10-15', (SELECT id FROM vehicule WHERE brand = 'Audi' AND model = 'R8'), (SELECT id FROM user WHERE full_name = 'Bob Brown'));
+    (UUID(), '2020-07-28', '2020-08-05', (SELECT id FROM vehicule WHERE brand = 'Ferrari' AND model = '488 GTB'), (SELECT id FROM user WHERE email = 'john@example.com')),
+    (UUID(), '2020-08-10', '2020-08-15', (SELECT id FROM vehicule WHERE brand = 'Lamborghini' AND model = 'Huracan'), (SELECT id FROM user WHERE email = 'jane@example.com')),
+    (UUID(), '2020-09-01', '2020-09-10', (SELECT id FROM vehicule WHERE brand = 'Porsche' AND model = '911'), (SELECT id FROM user WHERE email = 'alice@example.com')),
+    (UUID(), '2020-10-05', '2020-10-15', (SELECT id FROM vehicule WHERE brand = 'Audi' AND model = 'R8'), (SELECT id FROM user WHERE email = 'bob@example.com'));
 
 -- Generate fake data for the category table
 INSERT INTO `category` (`id`, `name`)
