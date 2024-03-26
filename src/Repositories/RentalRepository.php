@@ -15,18 +15,19 @@ class RentalRepository extends Database
 
   public function getUserRentals($user_id)
   {
-    $query = 'SELECT * FROM rental WHERE user_id = :user_id ';
+    $query = 'SELECT r.id AS reservation_id, r.start_date, r.end_date, v.brand, v.model, v.horsepower, v.daily_price FROM rental AS r JOIN vehicule AS v ON r.vehicule_id = v.id AND r.user_id=:user_id';
     $database = $this->getDb();
-    $statement = $database->query($query);
-    $statement->bindParam('user_id', $user_id);
+    $statement = $database->prepare($query);
+    $statement->bindParam(':user_id', $user_id);
     $statement->execute();
-    $rentals = $statement->fetchAll(PDO::FETCH_CLASS, Rental::class);
+    $rentals = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $rentals;
   }
 
+
   public function getById($id)
   {
-    $query = 'SELECT * FROM rental WHERE id = :id';
+    $query = 'SELECT r.id AS reservation_id, r.start_date, r.end_date, r.user_id, v.brand, v.model, v.horsepower, v.daily_price FROM rental AS r JOIN vehicule AS v ON r.vehicule_id = v.id AND r.id=:id';
     $database = $this->getDb();
     $statement = $database->prepare($query);
     $statement->bindParam('id', $id);
@@ -51,16 +52,13 @@ class RentalRepository extends Database
     $statement->execute();
   }
 
-  public function update($rental_id, $start_date, $end_date, $vehicule_id, $user_id)
+  public function update($rental_id, $end_date)
   {
     $database = $this->getDb();
-    $query = 'UPDATE rental SET (start_date, end_date, vehicule_id, user_id) VALUES (start_date=:start_date, end_date=:end_date, vehicule_id=:vehicule_id, user_id=:user_id) WHERE id=:id';
+    $query = 'UPDATE rental SET end_date=:end_date WHERE id=:id';
     $statement = $database->prepare($query);
     $statement->bindParam('id', $rental_id);
-    $statement->bindParam('start_date', $start_date);
     $statement->bindParam('end_date', $end_date);
-    $statement->bindParam('vehicule_id', $vehicule_id);
-    $statement->bindParam('user_id', $user_id);
     $statement->execute();
   }
 

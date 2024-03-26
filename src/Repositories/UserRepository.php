@@ -37,6 +37,17 @@ class UserRepository extends Database
     return $user;
   }
 
+  public function getUserIdByEmail($email)
+  {
+    $query = 'SELECT id FROM user WHERE email = :email';
+    $database = $this->getDb();
+    $statement = $database->prepare($query);
+    $statement->bindParam('email', $email);
+    $statement->execute();
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+    return $user;
+  }
+
   public function create($full_name, $email, $phone, $password)
   {
     $database = $this->getDb();

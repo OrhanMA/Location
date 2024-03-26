@@ -109,12 +109,14 @@ class ProfileController
       // si il n'a pas mis le bon mot de passe 
       $message = 'Valeur incorrecte dans mot de passe actuel';
       echo $this->renderView("profile/update/index", ['message' => $message, 'user' => $user]);
+      exit();
     }
 
     $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
     $this->userRepository->update($id, $full_name, $email, $phone, $new_password_hash);
     $message = 'Le profil a correctement été mis à jour';
     echo $this->renderView("profile/update/index", ['message' => $message, 'user' => $user]);
+    exit();
   }
 
   public function post_delete()
@@ -149,18 +151,20 @@ class ProfileController
       // si il n'a pas mis le bon mot de passe 
       $message = 'Valeur incorrecte dans mot de passe';
       echo $this->renderView("profile/delete/index", ['message' => $message, 'user' => $user]);
+      exit();
     }
 
     $this->userRepository->delete($id);
     $message = 'Votre compte a correctement été supprimé';
     echo $this->renderView("login", ['message' => $message]);
+    exit();
   }
 
   public function index()
   {
     if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
-    var_dump($_SESSION);
+    // var_dump($_SESSION);
 
     if (isset($_SESSION['authenticated_user']) && !empty($_SESSION['authenticated_user'])) {
       $email = $_SESSION['authenticated_user'];

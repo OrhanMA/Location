@@ -15,11 +15,19 @@ class AuthController
   public function get_register()
   {
     echo $this->renderView('register', [null]);
+    exit();
   }
 
   public function get_login()
   {
-    echo $this->renderView('login', [null]);
+    if (isset($_SESSION['authenticated_user']) && !empty($_SESSION['authenticated_user'])) {
+      $user = $this->userRepository->getByEmail($_SESSION['authenticated_user']);
+      echo $this->renderView('profile/index', ['user' => $user]);
+      exit();
+    } else {
+      echo $this->renderView('login', [null]);
+      exit();
+    }
   }
 
 
@@ -53,8 +61,8 @@ class AuthController
 
         if (password_verify($password, $password_hash)) {
           $_SESSION['authenticated_user'] = $user['email'];
-
           echo $this->renderView('profile/index', ['user' => $user]);
+          header('Location: /location/public/profile/index.php');
           exit();
         } else {
           $_SESSION['authenticated_user'] = null;
@@ -99,8 +107,9 @@ class AuthController
           }
           $_SESSION['authenticated_user'] = $user['email'];
 
-          $message = 'Vous êtes bien inscrit. Vous devez désormais vous connecter.';
-          echo $this->renderView('profile/index', ['message' => $message, 'user' => $user]);
+
+          echo $this->renderView('profile/index', ['user' => $user]);
+          header('Location: /location/public/profile/index.php');
           exit();
         } else {
           $message = 'Il y a déjà un utilisateur inscrit avec cette adresse email. Connectez-vous.';
@@ -113,5 +122,18 @@ class AuthController
       echo $this->renderView('register', ['message' => $message]);
       exit();
     }
+  }
+
+
+  public function logout()
+  {
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+      session_start();
+    }
+    session_destroy();
+    $message = 'Vous avez bien été déconnecté.';
+    echo $this->renderView('home', ['message' => $message]);
+    header('Location: /location/public/index.php');
+    exit();
   }
 }

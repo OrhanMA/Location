@@ -8,7 +8,9 @@
 </head>
 <?php
 
-print_r($user);
+if (isset($message) && !empty($message)) {
+  echo "<p>$message</p>";
+}
 
 ?>
 
@@ -16,11 +18,8 @@ print_r($user);
   <div>
     <div>
       <h1>Le véhicule de vos rêves à portée de main</h1>
-      <h2>Que ce soit pour une heure ou une semaine, repartez avec le véhicule de votre choix parmi notre sélection et revenez les yeux remplis d’étoiles.</h2>
-      <div>
-        <a href="./register/index.php">Inscription</a>
-        <a href="./login/index.php">Connexion</a>
-      </div>
+      <h2>Que ce soit pour une heure ou une semaine, repartez avec le véhicule de votre choix parmi notre sélection et revenez les yeux remplis d’étoiles.
+      </h2>
     </div>
     <div>
       <img src="../images/tokyo.jpg" alt="Street car meeting">

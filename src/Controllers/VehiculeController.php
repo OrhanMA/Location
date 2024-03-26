@@ -37,6 +37,7 @@ class VehiculeController
 
     // logique vue
     echo $this->renderView('vehicules/index', $vehicules);
+    exit();
   }
 
   public function get_rent($vehicule_id)
@@ -52,6 +53,7 @@ class VehiculeController
       }
     }
     echo $this->renderView('vehicules/rent', ['vehicule' => $vehicule, 'user_email' => $user_email]);
+    exit();
   }
 
   public function post_rent()
@@ -76,6 +78,7 @@ class VehiculeController
     if (!$user) {
       $message = "Vous devez être connecté pour réserver un véhicule";
       echo $this->renderView('login', ['message' => $message]);
+      exit();
     }
 
     $start_date = date("Y-m-d", strtotime($form_data['start_date']));
@@ -83,6 +86,7 @@ class VehiculeController
 
     $this->rentalRepository->create($start_date, $end_date, $form_data['vehicule_id'], $user['id']);
     echo $this->renderView('profile/rentals/index', ['user' => $user]);
+    exit();
   }
 
   // 9be97396-e5f4-11ee-95c9-db561d8c665e
@@ -95,6 +99,7 @@ class VehiculeController
       exit();
     } else {
       echo $this->renderView('vehicules/show/index', $vehicule);
+      exit();
     }
   }
 }

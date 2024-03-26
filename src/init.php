@@ -37,7 +37,9 @@ function classLoader($className)
 
 spl_autoload_register('classLoader');
 
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) {
+  session_start();
+}
 
 $database = new Database();
 
