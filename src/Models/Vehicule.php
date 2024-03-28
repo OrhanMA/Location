@@ -2,6 +2,7 @@
 
 class Vehicule
 {
+  // J'ai switch les propriétés en public pour exploiter les objets instanciés lors de l'affiche des données (cf: vehicules/index route)
   public $id;
   public $brand;
   public $model;
@@ -9,9 +10,20 @@ class Vehicule
   public $category_id;
   public $license_id;
   public $daily_price;
+  public $image_name;
 
   public function __construct()
   {
+  }
+
+  public function getImageName()
+  {
+    return $this->image_name;
+  }
+
+  public function setImageName($value)
+  {
+    $this->image_name = $value;
   }
 
   public function getId()

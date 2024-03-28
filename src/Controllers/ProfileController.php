@@ -18,8 +18,6 @@ class ProfileController
   {
     if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
-    // var_dump($_SESSION);
-
     if (isset($_SESSION['authenticated_user']) && !empty($_SESSION['authenticated_user'])) {
       $email = $_SESSION['authenticated_user'];
       $user = $this->userRepository->getById($id);
@@ -43,8 +41,6 @@ class ProfileController
   public function get_delete($id)
   {
     if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-
-    // var_dump($_SESSION);
 
     if (isset($_SESSION['authenticated_user']) && !empty($_SESSION['authenticated_user'])) {
       $email = $_SESSION['authenticated_user'];
@@ -70,7 +66,6 @@ class ProfileController
   public function post_update()
   {
     if (!isset($_POST) || empty($_POST)) {
-      // si pas de données
       $message = "Les données du formulaire n'ont pas pu être récupérées. Veuillez recommencer.";
       echo $this->renderView('profile/update/index', ['message' => $message]);
       exit();
@@ -109,7 +104,6 @@ class ProfileController
       if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
       }
-      // si ce n'est pas le bon user qui fait la requête
       $_SESSION['authenticated_user'] = null;
       $message = "Aucun user correspondant à cet email n'a été trouvé, veuillez vous identifier.";
       echo $this->renderView('login', ['message' => $message]);
@@ -119,7 +113,6 @@ class ProfileController
     $password_hash = $user['password'];
 
     if (!password_verify($current_password, $password_hash)) {
-      // si il n'a pas mis le bon mot de passe 
       $message = 'Valeur incorrecte dans mot de passe actuel';
       echo $this->renderView("profile/update/index", ['message' => $message, 'user' => $user]);
       exit();
@@ -135,7 +128,6 @@ class ProfileController
   public function post_delete()
   {
     if (!isset($_POST) || empty($_POST)) {
-      // si pas de données
       $message = "Les données du formulaire n'ont pas pu être récupérées. Veuillez recommencer.";
       echo $this->renderView('profile/delete/index', ['message' => $message]);
       exit();
@@ -151,7 +143,6 @@ class ProfileController
       if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
       }
-      // si ce n'est pas le bon user qui fait la requête
       $_SESSION['authenticated_user'] = null;
       $message = "Aucun user correspondant n'a été trouvé, veuillez vous identifier pour réaliser cette action.";
       echo $this->renderView('login', ['message' => $message]);
@@ -161,7 +152,6 @@ class ProfileController
     $password_hash = $user['password'];
 
     if (!password_verify($password, $password_hash)) {
-      // si il n'a pas mis le bon mot de passe 
       $message = 'Valeur incorrecte dans mot de passe';
       echo $this->renderView("profile/delete/index", ['message' => $message, 'user' => $user]);
       exit();
@@ -177,8 +167,6 @@ class ProfileController
   public function index()
   {
     if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-
-    // var_dump($_SESSION);
 
     if (isset($_SESSION['authenticated_user']) && !empty($_SESSION['authenticated_user'])) {
       $email = $_SESSION['authenticated_user'];

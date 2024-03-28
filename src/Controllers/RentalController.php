@@ -21,7 +21,6 @@ class RentalController
     $auth_email = $_SESSION['authenticated_user'];
 
     if (!isset($auth_email) || empty($auth_email)) {
-      // redirect
       $message = 'Connectez-vous pour accéder à cette page';
       echo $this->renderView('login', ['message' => $message]);
       exit();
@@ -29,7 +28,6 @@ class RentalController
     $user = $this->userRepository->getByEmail($auth_email);
 
     if (!$user) {
-      //Redirect 
       $message = 'Connectez-vous pour accéder à cette page';
       echo $this->renderView('login', ['message' => $message]);
       exit();
@@ -47,7 +45,6 @@ class RentalController
   public function get_update($id)
   {
     $rental = $this->rentalRepository->getById($id);
-    // var_dump($rental);
 
     echo $this->renderView('profile/rentals/update/index', ['rental' => $rental]);
     exit();
@@ -56,8 +53,6 @@ class RentalController
   public function get_delete($id)
   {
     $rental = $this->rentalRepository->getById($id);
-
-    // var_dump($rental);
 
     echo $this->renderView('profile/rentals/delete/index', ['rental' => $rental]);
     exit();

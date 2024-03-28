@@ -5,7 +5,7 @@ class VehiculeRepository extends Database
 
   public function getAll()
   {
-    $query = 'SELECT v.id, v.brand, v.model, v.horsepower, v.daily_price, l.id AS license_id, l.plate, 
+    $query = 'SELECT v.id, v.brand, v.model, v.horsepower, v.daily_price, v.image_name, l.id AS license_id, l.plate, 
     GROUP_CONCAT(c.name) AS categories
     FROM vehicule AS v 
     JOIN license AS l ON v.license_id = l.id

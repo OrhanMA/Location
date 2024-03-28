@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile Delete</title>
-</head>
-
-<body>
-  <h1>Page profile delete confirmation user</h1>
+<title>Supprimer mon compte</title>
+<div class="page">
+  <h1>Supprimer mon compte</h1>
   <?php
   if (isset($data) && !empty($data)) {
     $user = $data['user'];
@@ -25,17 +17,17 @@
   }
   ?>
 
+  <h2>Attention, cette action est irréversible!</h2>
+  <p>Entrez votre mot de passe pour valider la suppression.</p>
   <form action="./" method="post">
     <div>
       <input hidden aria-hidden="true" readonly required type="text" name="id" id="id" value="<?php echo $user['id']; ?>">
-      <h2>Attention, cette action est irréversible!</h2>
-      <p>Entrez votre mot de passe pour valider la suppression.</p>
-      <div>
+      <div class="form-field">
         <label for="password">Mot de passe</label>
         <input type="password" name="password" id="password">
       </div>
-      <input type="submit" value="Supprimer mon compte">
+      <input class="button bg-accent" type="submit" value="Supprimer mon compte">
   </form>
-</body>
+  </body>
 
-</html>
+  </html>

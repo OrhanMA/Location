@@ -1,0 +1,301 @@
+:root {
+  --accent: #9c001e;
+  --night: #061210;
+  --salt: #f7f7f7;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+body {
+  padding-top: 7rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+p {
+  line-height: 1.5rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style-position: inside;
+}
+
+.home,
+.presentation,
+.links-container,
+.header {
+  display: flex;
+}
+
+.home,
+.presentation {
+  flex-direction: column;
+}
+
+.links-container,
+.header {
+  flex-direction: row;
+}
+
+.home {
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.presentation {
+  align-items: start;
+}
+
+.presentation > p {
+  margin: 2rem 0rem;
+}
+
+.links-container {
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.links-container > a {
+  width: 50%;
+  max-width: 200px;
+}
+
+.tokyo {
+  width: 100%;
+  max-width: 500px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 0.5rem 2rem;
+  font-weight: bold;
+  border: none;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.accent {
+  color: var(--accent);
+}
+.bg-accent {
+  background-color: var(--accent);
+  color: var(--salt);
+}
+
+.night {
+  color: var(--night);
+}
+.bg-night {
+  background-color: var(--night);
+  color: var(--salt);
+}
+.salt {
+  color: var(--salt);
+}
+.bg-salt {
+  background-color: var(--salt);
+  color: var(--night);
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--night);
+  color: var(--salt);
+  padding: 1rem 0rem;
+  overflow: hidden;
+}
+
+.header a:visited {
+  color: var(--salt);
+}
+
+.header > p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.large-links {
+  display: none;
+  gap: 1.5rem;
+  margin-right: 1rem;
+}
+
+.mobile-menu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  margin-top: 15rem;
+  border-radius: 5px;
+  width: 70%;
+  background-color: var(--accent);
+}
+
+.hidden {
+  display: none;
+}
+
+.menu-icon-container {
+  border: none;
+  border-radius: 5px;
+  padding: 0.3rem;
+  margin-right: 1rem;
+}
+
+.menu-icon {
+  width: 30px;
+  height: 30p;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.car-card {
+  background-color: var(--night);
+  color: var(--salt);
+  padding: 2rem;
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.car-card-image {
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
+  margin-bottom: 2rem;
+}
+
+.car-card-button-container,
+.profil-card-button-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.profil-card {
+  background-color: var(--salt);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rent-link {
+  margin-top: 1rem;
+}
+.rent-link {
+  text-decoration: none;
+}
+.rent-link:visited {
+  color: var(--salt);
+}
+
+.categories {
+  margin: 2rem 0rem;
+}
+
+.categories-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.explications {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.page {
+  padding: 1rem;
+}
+
+form {
+  margin: 2rem 0rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.form-field > label {
+  font-weight: bold;
+}
+
+.form-field > input {
+  border: solid 1px var(--night);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+@media screen and (min-width: 640px) {
+  .large-links {
+    display: flex;
+  }
+  .mobile-menu,
+  .menu-icon-container {
+    display: none;
+  }
+  .page {
+    padding: 2rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .page {
+    padding: 4rem;
+  }
+  .home {
+    flex-direction: row;
+    gap: 3rem;
+  }
+  .presentation {
+    width: 50%;
+    padding: 1rem;
+  }
+  .image-container {
+    width: 50%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+  .tokyo {
+    width: 400px;
+  }
+}

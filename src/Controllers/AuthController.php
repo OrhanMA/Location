@@ -42,14 +42,10 @@ class AuthController
 
         $user = $this->userRepository->getByEmail($email);
         if (!$user) {
-          // var_dump($user);
-          // pas trouvé
           $message = "Auncun compte n'est associé à cet email.";
           echo $this->renderView('login', ['message' => $message]);
           exit();
         }
-        // var_dump($user);
-        // trouvé 
 
         $password_hash = $user['password'];
 
@@ -84,7 +80,6 @@ class AuthController
   }
 
 
-  // POST METHOD
   public function post_register()
   {
     if (isset($_POST) && !empty($_POST)) {
@@ -98,6 +93,12 @@ class AuthController
       ];
 
       $this->validate_form_fields($fields, 'register');
+
+      if ($_POST['password'] !== $_POST['confirm_password']) {
+        $message = "Les deux mots de passe ne correspondent pas. Veuillez recommencer.";
+        echo $this->renderView('register', ['message' => $message]);
+        exit();
+      }
 
 
       $first_name = htmlspecialchars($_POST['first_name']);

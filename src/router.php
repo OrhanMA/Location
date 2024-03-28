@@ -1,6 +1,14 @@
 <?php
 
+$baseUri = '/location/public';
 
+$vehiculeController = new VehiculeController();
+$homeController = new HomeController();
+$rentalController = new RentalController();
+$authController = new AuthController();
+$profileController = new ProfileController();
+
+// J'ai mis le check sur $_SERVER même si c'est une variable superglobale qui est censée être disponible dans tous les contextes d'exécution. 
 if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_SERVER['REQUEST_URI']) {
 
   $uri = parse_url($_SERVER['REQUEST_URI']);
@@ -11,40 +19,7 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
     echo "</br>";
   }
 
-  function get_url_dynamic_id(string $routeKey, int $offset)
-  {
-    if (isset($_SERVER) && !empty($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
-
-      $urlExploded = explode('/', $_SERVER['REQUEST_URI']);
-      // casse l'url en morceaux
-      $urlRouteKeyIndex = array_search($routeKey, $urlExploded);
-      // recherche dans le tableau urlExploded la clé de la route
-      $index = $urlRouteKeyIndex + $offset;
-      if (array_key_exists($index, $urlExploded)) {
-        $id = $urlExploded[$index];
-        return $id;
-      } else {
-        throw new Exception("Error: array key at index $index does not exist in urlExploded");
-      }
-      // récupère la clé suivante qui contient l'ID grâce à un offset
-    } else {
-      throw new Exception("Error: SERVER variable is not set or is empty");
-    }
-  }
-
-  // $id = get_url_dynamic_id('vehicules', 2);
-  // print_r($id);
-
-  $baseUri = '/location/public';
-
-  $vehiculeController = new VehiculeController();
-  $homeController = new HomeController();
-  $rentalController = new RentalController();
-  $authController = new AuthController();
-  $profileController = new ProfileController();
-
-  // print_r($uri_path);
-
+  // J'ai fait le choix de SPLIT les routes par méthodes avec 2 conditions if au lieu de faire des conditions dans les routes.
   if ($_SERVER['REQUEST_METHOD'] == "POST") {
     switch ($uri_path) {
       case $baseUri . '/register':
@@ -110,11 +85,6 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
         $id = get_url_dynamic_id('profile', 2);
         $profileController->get_delete($id);
         break;
-      case str_contains($uri_path, $baseUri . '/vehicules/show/'):
-        // str_contains vérifie dans le string en param #1 la présence d'un sous ensemble string précisé en param #2
-        $id = get_url_dynamic_id('vehicules', 2);
-        $vehiculeController->show($id);
-        break;
       case str_contains($uri_path, $baseUri . '/profile/rentals/update/');
         $id = get_url_dynamic_id('profile', 3);
         $rentalController->get_update($id);
@@ -123,13 +93,31 @@ if (isset($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER) && $_S
         $id = get_url_dynamic_id('profile', 3);
         $rentalController->get_delete($id);
         break;
-        // case str_contains($uri_path, $baseUri . '/rent'):
-        //   $id = $_GET['vehicule'];
-        //   $rentalController->index($id);
-        //   break;
       default:
         $homeController->not_found_404();
         break;
     }
+  }
+}
+
+
+function get_url_dynamic_id(string $routeKey, int $offset)
+{
+  if (isset($_SERVER) && !empty($_SERVER) && isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
+
+    $urlExploded = explode('/', $_SERVER['REQUEST_URI']);
+    // casse l'url en morceaux
+    $urlRouteKeyIndex = array_search($routeKey, $urlExploded);
+    // recherche dans le tableau urlExploded la clé de la route
+    $index = $urlRouteKeyIndex + $offset;
+    if (array_key_exists($index, $urlExploded)) {
+      $id = $urlExploded[$index];
+      return $id;
+    } else {
+      throw new Exception("Error: array key at index $index does not exist in urlExploded");
+    }
+    // récupère la clé suivante qui contient l'ID grâce à un offset
+  } else {
+    throw new Exception("Error: SERVER variable is not set or is empty");
   }
 }

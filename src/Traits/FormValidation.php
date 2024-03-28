@@ -3,7 +3,8 @@
 trait FormValidation
 {
   /**
-   * Redirige vers une page si un champ n'est pas set, est vide, ou n'est pas valide contre son regex attitré
+   * Redirige vers une page si un champ du formulaire n'est pas set, est vide, ou n'est pas valide contre son regex attitré
+   * @param $fields: la liste des champs du formulaire: tableau associatif ex: 'first_name' => regex
    */
   public function validate_form_fields($fields, $redirect_view)
   {

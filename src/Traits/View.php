@@ -11,7 +11,7 @@ trait View
     $viewFilePath = $this->getViewFilePath($viewPath);
 
 
-    // vérifie que le fichier existe et soit lisable
+    // vérifie que le fichier existe et soit lisible
     if ($viewFilePath === false || !is_readable($viewFilePath)) {
       throw new InvalidArgumentException("View file '$viewPath' not found or not readable.");
     }
@@ -35,14 +35,8 @@ trait View
 
   private function getViewFilePath($viewPath)
   {
-    // Assuming views directory is in the same directory as the script
     $viewsDirectory = __DIR__ . '/../Views/';
-
-    // Adjust this logic based on your directory structure or view resolution strategy
     $viewFilePath = realpath($viewsDirectory . $viewPath . '.php');
-
-    // Perform additional checks if necessary (e.g., security checks)
-
     return $viewFilePath;
   }
 }

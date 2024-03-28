@@ -10,6 +10,7 @@ function classLoader($className)
   $folderPathControllers = __DIR__ . '/Controllers/';
   $folderPathTraits = __DIR__ . '/Traits/';
 
+  // J'ai ajouté les Traits dans l'autoloader puisqu'il s'agit tout simplement d'autoload un fichier présent dans un dossier.
 
   if (file_exists($folderPathClasses . $filePathClass)) {
     require $folderPathClasses . $filePathClass;

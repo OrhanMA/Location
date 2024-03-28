@@ -24,37 +24,37 @@ class VehiculeController
 
   public function index()
   {
-    // logique bdd
     $vehicules = $this->vehiculeRepository->getAll();
     foreach ($vehicules as $vehicule) {
       // je récupère un string avec les catégories séparées par virgule donc je dois transformer ça en tableau avec explode
       $categories = explode(",", $vehicule->categories);
-      // print_r($categories);
       // puise je réassigne categories en lui donnant le tableau
       $vehicule->categories = $categories;
-      // print_r($vehicule);
-      // echo "<br/>";
     }
 
-    // logique vue
     echo $this->renderView('vehicules/index', $vehicules);
     exit();
   }
 
   public function get_rent($vehicule_id)
   {
-    // print_r($vehicule_id);
     $vehicule = $this->vehiculeRepository->getById($vehicule_id);
 
-    // print_r($vehicule);
+    $user_email = '';
 
     if (isset($_SESSION) && !empty($_SESSION)) {
       if (isset($_SESSION['authenticated_user']) && !empty($_SESSION['authenticated_user'])) {
         $user_email = $_SESSION['authenticated_user'];
+        echo $this->renderView('vehicules/rent', ['vehicule' => $vehicule, 'user_email' => $user_email]);
+        exit();
+      } else {
+        echo $this->renderView('login', ["message" => 'connectez-vous pour pouvoir louer un véhicule']);
+        exit();
       }
+    } else {
+      echo $this->renderView('login', ["message" => 'connectez-vous pour pouvoir louer un véhicule']);
+      exit();
     }
-    echo $this->renderView('vehicules/rent', ['vehicule' => $vehicule, 'user_email' => $user_email]);
-    exit();
   }
 
   public function post_rent()
@@ -92,18 +92,5 @@ class VehiculeController
 
     echo $this->renderView('profile/rentals/index', ['user' => $user, 'rentals' => $rentals]);
     exit();
-  }
-
-
-  public function show($id)
-  {
-    $vehicule = $this->vehiculeRepository->getById($id);
-    if ($vehicule == 0) {
-      echo $this->renderView('vehicules/show/failure', [$id]);
-      exit();
-    } else {
-      echo $this->renderView('vehicules/show/index', $vehicule);
-      exit();
-    }
   }
 }

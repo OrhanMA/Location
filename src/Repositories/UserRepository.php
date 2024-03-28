@@ -69,7 +69,6 @@ class UserRepository extends Database
 
   public function update($id, $first_name, $last_name, $email, $phone, $password)
   {
-    // print_r($password);
     $database = $this->getDb();
     $query = $query = 'UPDATE user SET first_name=:first_name, last_name=:last_name, email=:email, phone=:phone, password=:password WHERE id=:id';
     $statement = $database->prepare($query);
@@ -84,10 +83,27 @@ class UserRepository extends Database
 
   public function delete($id)
   {
-    $query = "DELETE FROM user WHERE id=:id";
+    // En ce qui concerne les fonctions suivantes: beginTransaction, commit et rollback: https://www.php.net/manual/fr/pdo.transactions.php
     $database = $this->getDb();
-    $statement = $database->prepare($query);
-    $statement->bindParam('id', $id);
-    $statement->execute();
+    $database->beginTransaction();
+
+    try {
+      // J'ai une relation dans rental qui m'empêche de supprimer mon compte user.
+      // Je supprime donc dans la table rental tous les records du user.
+      $delete_rental_query = "DELETE FROM rental WHERE user_id = :user_id";
+      $rental_statement = $database->prepare($delete_rental_query);
+      $rental_statement->bindParam(':user_id', $id);
+      $rental_statement->execute();
+
+      $delete_user_query = "DELETE FROM user WHERE id = :id";
+      $user_statement = $database->prepare($delete_user_query);
+      $user_statement->bindParam(':id', $id);
+      $user_statement->execute();
+
+      $database->commit();
+    } catch (PDOException $exception) {
+      $database->rollBack();
+      throw $exception;
+    }
   }
 }
