@@ -24,7 +24,9 @@ function render_categories($categories)
   <div class="cards-container">
     <?php foreach ($vehicules as $vehicule) : ?>
       <div class='car-card'>
-        <img class='car-card-image' src='/location/public/images/<?php echo $vehicule->image_name ?>' alt='image of the <?php echo $vehicule->model ?> car' />
+        <div class="car-image-container">
+          <img class='car-card-image' src='/location/public/images/<?php echo $vehicule->image_name ?>' alt='image of the <?php echo $vehicule->model ?> car' />
+        </div>
         <div>
           <p>Constructeur: <?php echo $vehicule->brand ?></p>
           <p>Modèle: <?php echo $vehicule->model ?></p>

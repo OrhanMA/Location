@@ -3,7 +3,9 @@
   <h1>Réservation</h1>
   <p>Remplissez le formulaire suivant pour louer ce véhicule</p>
   <div class="car-card">
-    <img class='car-card-image' src='/location/public/images/<?php echo $vehicule['image_name'] ?>' alt='image of the <?php echo $vehicule['model'] ?> car' />
+    <div class="car-image-container">
+      <img class='car-card-image' src='/location/public/images/<?php echo $vehicule['image_name'] ?>' alt='image of the <?php echo $vehicule['model'] ?> car' />
+    </div>
     <p>Constructeur: <?php echo $vehicule['brand'] ?></p>
     <p>Modèle: <?php echo $vehicule['model'] ?></p>
     <p>Puissance (cv): <?php echo $vehicule['horsepower'] ?></p>

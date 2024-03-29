@@ -2,14 +2,12 @@
 <div class="page">
   <h1>Mettre à jour mon profil</h1>
   <?php
-  if (isset($data) && !empty($data)) {
-    $user = $data['user'];
-    if (isset($data['message']) && !empty($data['message'])) {
-      $message = $data['message'];
-      echo "<p>$message</p>";
-    }
-  }
+  $user = (isset($data) && !empty($data)) ? $data['user'] : null;
+  $message = (isset($data['message']) && !empty($data['message'])) ? $data['message'] : null;
   ?>
+  <?php if (isset($message) && !empty($message)) : ?>
+    <p class="accent"><?php echo $message ?></p>
+  <?php endif; ?>
   <form action="/location/public/profile/update" method="post">
     <div class='form-field'>
       <input hidden aria-hidden="true" readonly required type="text" name="id" id="id" value="<?php echo $user['id']; ?>">

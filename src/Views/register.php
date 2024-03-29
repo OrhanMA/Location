@@ -1,12 +1,10 @@
 <title>Register</title>
 <div class="page">
   <h1>Register page</h1>
-  <?php
-  if (isset($message) && !empty($message)) {
-    echo "<p> $message </p>";
-  }
-  ?>
   <a href="/location/public/login/index.php">Cliquez ici pour vous connecter</a>
+  <?php if (isset($message) && !empty($message)) : ?>
+    <p class='accent'> <?php echo $message ?> </p>
+  <?php endif; ?>
   <form action="/location/public/register" method="post">
     <div class='form-field'>
       <label for="first_name">First name</label>

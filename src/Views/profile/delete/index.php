@@ -2,20 +2,10 @@
 <div class="page">
   <h1>Supprimer mon compte</h1>
   <?php
-  if (isset($data) && !empty($data)) {
-    $user = $data['user'];
-
-
-    if (isset($data['message']) && !empty($data['message'])) {
-      $message = $data['message'];
-      if (isset($message) && !empty($message)) {
-        echo "<p>$message</p>";
-      }
-    }
-  }
+  $user = (isset($data) && !empty($data)) ? $data['user'] : null;
+  $message = (isset($data['message']) && !empty($data['message'])) ? $data['message'] : null;
   ?>
-
-  <h2>Attention, cette action est irréversible!</h2>
+  <p class="accent">Attention, cette action est irréversible!</p>
   <p>Entrez votre mot de passe pour valider la suppression.</p>
   <form action="./" method="post">
     <div>
@@ -23,6 +13,9 @@
       <div class="form-field">
         <label for="password">Mot de passe</label>
         <input type="password" name="password" id="password">
+        <?php if (isset($message) && !empty($message)) : ?>
+          <p class='accent'><?php echo $message ?></p>
+        <?php endif; ?>
       </div>
       <input class="button bg-accent" type="submit" value="Supprimer mon compte">
   </form>

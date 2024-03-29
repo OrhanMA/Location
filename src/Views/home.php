@@ -1,7 +1,7 @@
 <title>Home page</title>
 <div class='home page'>
   <?php if (isset($message) && !empty($message)) : ?>
-    <p><?php echo $message; ?></p>
+    <p class="accent"><?php echo $message; ?></p>
   <?php endif; ?>
 
   <div class="presentation">
