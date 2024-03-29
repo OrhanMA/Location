@@ -82,6 +82,12 @@ li {
   max-width: 500px;
 }
 
+.image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .button {
   display: flex;
   justify-content: center;
@@ -169,6 +175,7 @@ li {
   padding-bottom: 1rem;
   border-bottom: solid 1px var(--salt);
   width: 90%;
+  color: var(--salt);
 }
 
 .hidden {
@@ -181,7 +188,10 @@ li {
   padding: 0.3rem;
   margin-right: 1rem;
 }
-
+.menu-icon:hover,
+.menu-icon-container:hover {
+  cursor: pointer;
+}
 .menu-icon {
   width: 30px;
   height: 30p;
@@ -215,7 +225,7 @@ li {
 }
 
 .car-card-image {
-  width: 400px;
+  width: 300px;
   height: 250px;
   object-fit: cover;
   margin-bottom: 2rem;
@@ -287,6 +297,11 @@ form {
   border-radius: 5px;
 }
 
+@media screen and (min-width: 500px) {
+  .car-card-image {
+    width: 400px;
+  }
+}
 @media screen and (min-width: 640px) {
   .large-links {
     display: flex;
@@ -317,6 +332,12 @@ form {
     display: flex;
     justify-content: center;
   }
+  .tokyo {
+    width: 300px;
+  }
+}
+
+@media screen and (min-width: 900px) {
   .tokyo {
     width: 400px;
   }

@@ -8,8 +8,8 @@
     <p>Téléphone: <?php echo $user['phone'] ?></p>
   </div>
   <div class="profil-card-button-container">
-    <a class="button bg-night" href="/location/public/profile/update/<?php echo $user['id']; ?>">Mettre à jour profil</a>
-    <a class="button bg-accent" href="/location/public/profile/delete/<?php echo $user['id']; ?>">Supprimer mon compte</a>
+    <a class="button bg-night" href="/location/public/profile/update/<?php echo $user['id']; ?>">Modifier</a>
+    <a class="button bg-accent" href="/location/public/profile/delete/<?php echo $user['id']; ?>">Supprimer</a>
   </div>
 </div>
 

@@ -15,8 +15,9 @@ $authenticated = isset($_SESSION['authenticated_user']) && !empty($_SESSION['aut
   <button class="menu-icon-container bg-salt">
     <img class="menu-icon" src="/location/public/images/menu.png" alt="menu icon">
   </button>
-  <div class="mobile-menu ">
+  <div class="mobile-menu hidden">
     <button class="button close-mobile-menu bg-night">fermer</button>
+    <a href='/location/public/vehicules/index.php'>Véhicules</a>
     <?php if ($authenticated) : ?>
       <a href='/location/public/profile/rentals/index.php'>Mes locations</a>
       <a href='/location/public/profile/index.php'>Profil</a>

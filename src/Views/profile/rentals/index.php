@@ -38,8 +38,8 @@
               <p>Fin de location: <?php echo $rental['end_date'] ?></p>
             </div>
             <div class='car-card-button-container'>
-              <a class='button bg-accent' href='/location/public/profile/rentals/update/<?php echo $rental['reservation_id']; ?>'>Update reservation</a>
-              <a class='button bg-salt' href='/location/public/profile/rentals/delete/<?php echo $rental['reservation_id']; ?>'>Delete reservation</a>
+              <a class='button bg-accent' href='/location/public/profile/rentals/update/<?php echo $rental['reservation_id']; ?>'>Mettre à jour</a>
+              <a class='button bg-salt' href='/location/public/profile/rentals/delete/<?php echo $rental['reservation_id']; ?>'>Supprimer</a>
             </div>
           </div>
         <?php endforeach; ?>
