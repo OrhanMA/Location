@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../Repositories/RentalRepository.php';
-
 
 class RentalController
 {

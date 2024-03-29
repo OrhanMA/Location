@@ -1,10 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../Repositories/VehiculeRepository.php';
-require_once __DIR__ . '/../Repositories/LicenseRepository.php';
-require_once __DIR__ . '/../Repositories/RentalRepository.php';
-require_once __DIR__ . '/../Repositories/UserRepository.php';
-
 class VehiculeController
 {
   use View;

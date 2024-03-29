@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . './../Classes/UUID.php';
-
 class UserRepository extends Database
 {
 

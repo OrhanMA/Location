@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../Repositories/UserRepository.php';
-
-
 class ProfileController
 {
   use View;
