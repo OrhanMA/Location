@@ -13,7 +13,6 @@ class VehiculeRepository extends Database
     JOIN category AS c ON cv.category_id = c.id
     GROUP BY v.id';
 
-
     $database = $this->getDb();
     $statement = $database->query($query);
     $statement->execute();

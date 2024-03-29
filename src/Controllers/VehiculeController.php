@@ -4,6 +4,7 @@ class VehiculeController
 {
   use View;
   use FormValidation;
+  use Assertion;
   private $vehiculeRepository;
   private $licenseRepository;
   private $rentalRepository;
@@ -37,15 +38,10 @@ class VehiculeController
 
     $user_email = '';
 
-    if (isset($_SESSION) && !empty($_SESSION)) {
-      if (isset($_SESSION['authenticated_user']) && !empty($_SESSION['authenticated_user'])) {
-        $user_email = $_SESSION['authenticated_user'];
-        echo $this->renderView('vehicules/rent', ['vehicule' => $vehicule, 'user_email' => $user_email]);
-        exit();
-      } else {
-        echo $this->renderView('login', ["message" => 'connectez-vous pour pouvoir louer un véhicule']);
-        exit();
-      }
+    if ($this->sne($_SESSION) && $this->sne($_SESSION['authenticated_user'])) {
+      $user_email = $_SESSION['authenticated_user'];
+      echo $this->renderView('vehicules/rent', ['vehicule' => $vehicule, 'user_email' => $user_email]);
+      exit();
     } else {
       echo $this->renderView('login', ["message" => 'connectez-vous pour pouvoir louer un véhicule']);
       exit();
@@ -54,9 +50,8 @@ class VehiculeController
 
   public function post_rent()
   {
-    if (!isset($_POST) || empty($_POST)) {
-      $message = "Les données du formulaire n'ont pas pu être récupérées. Veuillez recommencer.";
-      echo $this->renderView('vehicules/index', ['message' => $message]);
+    if ($this->not_se($_POST)) {
+      echo $this->renderView('vehicules/index', ['message' => "Les données du formulaire n'ont pas pu être récupérées. Veuillez recommencer."]);
       exit();
     }
 
@@ -73,8 +68,7 @@ class VehiculeController
     $user = $this->userRepository->getByEmail($_POST['email']);
 
     if (!$user) {
-      $message = "Vous devez être connecté pour réserver un véhicule";
-      echo $this->renderView('login', ['message' => $message]);
+      echo $this->renderView('login', ['message' => "Vous devez être connecté pour réserver un véhicule"]);
       exit();
     }
 

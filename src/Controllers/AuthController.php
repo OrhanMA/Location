@@ -4,6 +4,7 @@ class AuthController
 {
   use View;
   use FormValidation;
+  use Assertion;
   private $userRepository;
 
   public function __construct()
@@ -13,35 +14,37 @@ class AuthController
 
   public function get_register()
   {
-    echo $this->renderView('register', [null]);
+    echo $this->renderView('register');
     exit();
   }
 
   public function get_login()
   {
-    if (isset($_SESSION['authenticated_user']) && !empty($_SESSION['authenticated_user'])) {
-      $user = $this->userRepository->getByEmail($_SESSION['authenticated_user']);
-      echo $this->renderView('profile/index', ['user' => $user]);
-      exit();
+    if ($this->sne($_SESSION)) {
+      if ($this->sne($_SESSION['authenticated_user'])) {
+        $user = $this->userRepository->getByEmail($_SESSION['authenticated_user']);
+        echo $this->renderView('profile/index', ['user' => $user]);
+      } else {
+        echo $this->renderView('login');
+      }
     } else {
-      echo $this->renderView('login', [null]);
-      exit();
+      echo $this->renderView('login');
     }
+    exit();
   }
 
 
   public function post_login()
   {
-    if (isset($_POST) && !empty($_POST)) {
+    if ($this->sne($_POST)) {
 
-      if (isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['password']) && !empty($_POST['password'])) {
+      if ($this->sne($_POST['email']) && $this->sne($_POST['password'])) {
         $email = htmlspecialchars($_POST['email']);
         $password = htmlspecialchars($_POST['password']);
 
         $user = $this->userRepository->getByEmail($email);
         if (!$user) {
-          $message = "Auncun compte n'est associé à cet email.";
-          echo $this->renderView('login', ['message' => $message]);
+          echo $this->renderView('login', ['message' => "Auncun compte n'est associé à cet email."]);
           exit();
         }
 
@@ -58,29 +61,23 @@ class AuthController
           $_SESSION['authenticated_user'] = $user['email'];
           echo $this->renderView('profile/index', ['user' => $user]);
           header('Location: /location/public/profile/index.php');
-          exit();
         } else {
           $_SESSION['authenticated_user'] = null;
-          $message = 'Invalid credentials';
-          echo $this->renderView('login', ['message' => $message]);
-          exit();
+          echo $this->renderView('login', ['message' => 'Identifiants incorrects']);
         }
       } else {
-        $message = "Les données du formulaire n'ont pas pu être récupérée. Veuillez réessayer.";
-        echo $this->renderView('login', ['message' => $message]);
-        exit();
+        echo $this->renderView('login', ['message' => "Les données du formulaire n'ont pas pu être récupérée. Veuillez réessayer."]);
       }
     } else {
-      $message = "Les données du formulaire n'ont pas pu être récupérée. Veuillez réessayer.";
-      echo $this->renderView('login', ['message' => $message]);
-      exit();
+      echo $this->renderView('login', ['message' => "Les données du formulaire n'ont pas pu être récupérée. Veuillez réessayer."]);
     }
+    exit();
   }
 
 
   public function post_register()
   {
-    if (isset($_POST) && !empty($_POST)) {
+    if ($this->sne($_POST)) {
 
       $fields = [
         'first_name' => '/^[a-zA-ZÀ-ÿ\s]{3,50}$/',
@@ -93,8 +90,7 @@ class AuthController
       $this->validate_form_fields($fields, 'register');
 
       if ($_POST['password'] !== $_POST['confirm_password']) {
-        $message = "Les deux mots de passe ne correspondent pas. Veuillez recommencer.";
-        echo $this->renderView('register', ['message' => $message]);
+        echo $this->renderView('register', ['message' => "Les deux mots de passe ne correspondent pas. Veuillez recommencer."]);
         exit();
       }
 
@@ -126,13 +122,11 @@ class AuthController
         header('Location: /location/public/profile/index.php');
         exit();
       } else {
-        $message = 'Il y a déjà un utilisateur inscrit avec cette adresse email. Connectez-vous.';
-        echo $this->renderView('login', ['message' => $message]);
+        echo $this->renderView('login', ['message' => 'Il y a déjà un utilisateur inscrit avec cette adresse email. Connectez-vous.']);
         exit();
       }
     } else {
-      $message = "Les données du formulaire n'ont pas pu être récupérée. Veuillez réessayer.";
-      echo $this->renderView('register', ['message' => $message]);
+      echo $this->renderView('register', ['message' => "Les données du formulaire n'ont pas pu être récupérée. Veuillez réessayer."]);
       exit();
     }
   }
@@ -144,8 +138,7 @@ class AuthController
       session_start();
     }
     session_destroy();
-    $message = 'Vous avez bien été déconnecté.';
-    echo $this->renderView('home', ['message' => $message]);
+    echo $this->renderView('home', ['message' => 'Vous avez bien été déconnecté.']);
     header('Location: /location/public/index.php');
     exit();
   }

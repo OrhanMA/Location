@@ -6,7 +6,7 @@ class HomeController
 
   public function index()
   {
-    echo $this->renderView('home', [null]);
+    echo $this->renderView('home');
     exit();
   }
 
