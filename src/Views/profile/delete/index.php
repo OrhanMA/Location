@@ -7,9 +7,7 @@
 
 
     if (isset($data['message']) && !empty($data['message'])) {
-
       $message = $data['message'];
-      // var_dump($user); 
       if (isset($message) && !empty($message)) {
         echo "<p>$message</p>";
       }
