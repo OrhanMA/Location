@@ -3,10 +3,22 @@
 class HomeController
 {
   use View;
+  use Assertion;
+  private $userRepository;
+
+  public function __construct()
+  {
+    $this->userRepository = new UserRepository();
+  }
 
   public function index()
   {
-    echo $this->renderView('home');
+    if ($this->sne($_SESSION) && $this->sne($_SESSION['authenticated_user'])) {
+      $user = $this->userRepository->getByEmail($_SESSION['authenticated_user']);
+      echo $this->renderView('home', ['user' => $user]);
+    } else {
+      echo $this->renderView('home');
+    }
     exit();
   }
 
