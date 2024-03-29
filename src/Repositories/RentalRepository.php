@@ -15,7 +15,7 @@ class RentalRepository extends Database
 
   public function getUserRentals($user_id)
   {
-    $query = 'SELECT r.id AS reservation_id, r.start_date, r.end_date, v.brand, v.model, v.horsepower, v.daily_price FROM rental AS r JOIN vehicule AS v ON r.vehicule_id = v.id AND r.user_id=:user_id';
+    $query = 'SELECT r.id AS reservation_id, r.start_date, r.end_date, v.brand, v.model, v.horsepower, v.daily_price, v.image_name FROM rental AS r JOIN vehicule AS v ON r.vehicule_id = v.id AND r.user_id=:user_id';
     $database = $this->getDb();
     $statement = $database->prepare($query);
     $statement->bindParam(':user_id', $user_id);
@@ -27,7 +27,7 @@ class RentalRepository extends Database
 
   public function getById($id)
   {
-    $query = 'SELECT r.id AS reservation_id, r.start_date, r.end_date, r.user_id, v.brand, v.model, v.horsepower, v.daily_price FROM rental AS r JOIN vehicule AS v ON r.vehicule_id = v.id AND r.id=:id';
+    $query = 'SELECT r.id AS reservation_id, r.start_date, r.end_date, r.user_id, v.brand, v.model, v.horsepower, v.daily_price, v.image_name FROM rental AS r JOIN vehicule AS v ON r.vehicule_id = v.id AND r.id=:id';
     $database = $this->getDb();
     $statement = $database->prepare($query);
     $statement->bindParam('id', $id);

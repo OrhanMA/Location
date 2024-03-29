@@ -16,10 +16,12 @@
   } else {
     foreach ($rentals as $rental) {
       echo "<div class='car-card'>";
+      echo " <img class='car-card-image' src='/location/public/images/$rental[image_name]' alt='image of the $rental[model] car'/>";
       foreach ($rental as $key => $value) {
         # code...
         echo "<p> $key : $value </p>";
       }
+
       $rental_id = $rental['reservation_id'];
       echo "<div class='car-card-button-container'>";
       echo "<a class='button bg-accent' href='/location/public/profile/rentals/update/$rental_id'>Update reservation</a>";

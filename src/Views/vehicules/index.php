@@ -12,7 +12,7 @@
         echo "<div class='car-card'>";
         echo
         "
-      <img class='car-card-image' src='./../images/$vehicule->image_name' alt='image of the $vehicule->model car'/>
+      <img class='car-card-image' src='/location/public/images/$vehicule->image_name' alt='image of the $vehicule->model car'/>
       <div>
       <p>Constructeur: $vehicule->brand</p>
       <p>Modèle: $vehicule->model</p>

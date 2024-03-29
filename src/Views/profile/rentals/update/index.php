@@ -19,6 +19,7 @@
       <p>Pour cela, rapprochez-vous d'un conseiller ou annuler votre réservation pour en créer une nouvelle.</p>
     </div>
     <div class="car-card">
+      <img src="/location/public/images/<?php echo $rental['image_name'] ?>" alt="image of the <?php echo $rental['model'] ?> car">
       <p>Modèle: <?php echo $rental['model']  ?></p>
       <p>Brand: <?php echo $rental['brand']  ?></p>
       <p>Horsepower: <?php echo $rental['horsepower']  ?> ch</p>

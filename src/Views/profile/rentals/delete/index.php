@@ -6,6 +6,7 @@
       Véhicule concerné:
     </h2>
     <div class="car-card">
+      <img src="/location/public/images/<?php echo $rental['image_name'] ?>" alt="image of the <?php echo $rental['model'] ?> car">
       <p>Modèle: <?php echo $rental['model']  ?></p>
       <p>Brand: <?php echo $rental['brand']  ?></p>
       <p>Horsepower: <?php echo $rental['horsepower']  ?> ch</p>

@@ -6,6 +6,7 @@
   echo "<div class='car-card'>";
   echo
   "
+    <img class='car-card-image' src='/location/public/images/$vehicule[image_name]' alt='image of the $vehicule[model] car'/>
     <p>Brand: $vehicule[brand]</p>
     <p>Model: $vehicule[model]</p>
     <p>Horsepower: $vehicule[horsepower] ch</p>
